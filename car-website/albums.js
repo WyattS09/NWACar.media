@@ -24,7 +24,38 @@ const albums = {
         "thumb.jpeg",
       ]
     },
-  };
+    "nov-2-nov-carshow": {
+      title: "Nov. 2 Nov. carshow",
+      path: "images/albums/nov-2-nov-carshow",
+      thumbnail: "thumb.jpeg",
+      photos: [
+        "IMG_4927.jpeg",
+        "IMG_4928.jpeg",
+        "IMG_4929.jpeg",
+        "IMG_4930.jpeg",
+        "IMG_4931.jpeg",
+        "IMG_4932.jpeg",
+        "IMG_4933.jpeg",
+        "IMG_4934.jpeg",
+        "IMG_4935.jpeg",
+        "IMG_4936.jpeg",
+        "IMG_4937.jpeg",
+        "IMG_4938.jpeg",
+        "IMG_4939.jpeg",
+        "IMG_4940.jpeg",
+        "IMG_4941.jpeg",
+        "IMG_4942.jpeg",
+        "IMG_4943.jpeg",
+        "thumb.jpeg",
+        "IMG_4945.jpeg",
+        "IMG_4946.jpeg",
+        "IMG_4947.jpeg",
+        "IMG_4948.jpeg",
+        "IMG_4949.jpeg",
+        "IMG_4950.jpeg",
+      ]
+  },
+};
   
       
   
