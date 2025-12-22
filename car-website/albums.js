@@ -26,7 +26,7 @@ const albums = {
     },
     "nov-2-nov-carshow": {
       title: "Nov. 2 Nov. carshow",
-      path: "images/albums/nov-2-nov-carshow",
+      path: "images/albums/nov-2-nov-carshow/",
       thumbnail: "thumb.jpeg",
       photos: [
         "IMG_4927.jpeg",
