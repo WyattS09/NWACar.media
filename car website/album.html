@@ -23,16 +23,13 @@
 
 <main class="photo-grid" id="photo-grid"></main>
 
-<footer>
-  <p>© 2025 Car Visuals</p>
-</footer>
-
 <script src="albums.js"></script>
 <script>
   const params = new URLSearchParams(window.location.search);
   const albumKey = params.get("album");
-
   const album = albums[albumKey];
+
+  console.log(album); // DEBUG — leave this in for now
 
   if (!album) {
     document.getElementById("album-title").textContent = "Album not found";
@@ -42,14 +39,18 @@
     document.getElementById("album-description").textContent = album.description;
 
     const grid = document.getElementById("photo-grid");
-    album.photos.forEach(src => {
+
+    album.photos.forEach(photo => {
       const img = document.createElement("img");
-      img.src = src;
+      img.src = album.path + photo;
       img.alt = album.title;
       grid.appendChild(img);
     });
   }
 </script>
+<footer>
+  <p>© 2025 Car Visuals</p>
+</footer>
 
 </body>
 </html>

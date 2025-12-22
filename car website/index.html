@@ -21,18 +21,30 @@
     <p>Real Pictures. Real People. Real Machines.</p>
   </header>
 
-  <main class="album-grid">
+  <main class="album-grid" id="album-grid"></main>
+
+  <script src="albums.js"></script>
+  <script>
+    const grid = document.getElementById("album-grid");
+  
+    Object.keys(albums).forEach(key => {
+      const album = albums[key];
+  
+      const link = document.createElement("a");
+      link.href = `album.html?album=${key}`;
+      link.className = "album-card";
+  
+      link.innerHTML = `
+        <img src="${album.path}thumb.jpeg" alt="${album.title}">
+        <div class="album-title">${album.title}</div>
+      `;
+  
+      grid.appendChild(link);
+    });
+  </script>
 
     <!-- Album Card -->
-    <a href="album.html?album=may14" class="album-card">
-        <img src="images/album1-thumb.jpg">
-        <div class="album-title">May 14 – Sunset Cruise</div>
-      </a>
-      
-      <a href="album.html?album=may20" class="album-card">
-        <img src="images/album2-thumb.jpg">
-        <div class="album-title">May 20 – Downtown Night Run</div>
-      </a>
+
       
       
 
