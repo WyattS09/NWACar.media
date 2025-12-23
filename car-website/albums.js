@@ -4,7 +4,6 @@ const albums = {
       path: "images/albums/dec-21-sunday-shoot/",
       thumbnail: "thumb.jpeg",
       photos: [
-        "IMG_9979.jpeg",
         "IMG_9855.jpeg",
         "IMG_9862.jpeg",
         "IMG_9856.jpeg",
