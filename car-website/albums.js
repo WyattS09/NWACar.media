@@ -18,7 +18,6 @@ const albums = {
         "IMG_9964.jpeg",
         "IMG_9966.jpeg",
         "IMG_9969.jpeg",
-        "IMG_9971.jpeg",
         "IMG_9973.jpeg",
         "thumb.jpeg",
         "IMG_4953.jpeg",
