@@ -48,6 +48,7 @@
     const img = document.createElement("img");
     img.src = album.path + photo;
     img.alt = album.title;
+    img.loading = "lazy"; 
 
     img.addEventListener("click", () => {
       lightboxImg.src = img.src;
