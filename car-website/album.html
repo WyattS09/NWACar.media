@@ -55,6 +55,8 @@
     const nextBtn = document.getElementById("lightbox-next");
 
     let currentIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     // 2️⃣ Build photo grid
     album.photos.forEach((photo, index) => {
@@ -112,6 +114,35 @@
       else if (e.key === "ArrowLeft") showPrev();
       else if (e.key === "ArrowRight") showNext();
     });
+
+    // swiping
+    // Touch start
+lightbox.addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+// Touch end
+lightbox.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+// Swipe handler
+function handleSwipe() {
+  if (lightbox.classList.contains("hidden")) return;
+
+  const swipeDistance = touchEndX - touchStartX;
+  const minSwipe = 50; // minimum px to count as swipe
+
+  if (swipeDistance > minSwipe) {
+    // Swipe RIGHT → previous image
+    showPrev();
+  } else if (swipeDistance < -minSwipe) {
+    // Swipe LEFT → next image
+    showNext();
+  }
+}
+
   }
 </script>
 
