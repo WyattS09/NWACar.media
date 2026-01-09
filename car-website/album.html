@@ -25,58 +25,97 @@
 <main class="photo-grid" id="photo-grid"></main>
 <div id="lightbox" class="lightbox hidden">
   <span class="lightbox-close">&times;</span>
+  <span id="lightbox-prev" class="lightbox-arrow">&#10094;</span>
   <img id="lightbox-img" src="" alt="">
+  <span id="lightbox-next" class="lightbox-arrow">&#10095;</span>
 </div>
+
+
 
 <script src="albums.js"></script>
 
 <script>
+  // 1️⃣ Get album from URL
   const params = new URLSearchParams(window.location.search);
   const albumKey = params.get("album");
   const album = albums[albumKey];
 
-  document.getElementById("album-title").textContent = album.title;
-  document.getElementById("album-description").textContent = album.description;
+  if (!album) {
+    document.getElementById("album-title").textContent = "Album not found";
+  } else {
+    document.title = album.title;
+    document.getElementById("album-title").textContent = album.title;
+    document.getElementById("album-description").textContent = album.description;
 
-  const grid = document.getElementById("photo-grid");
+    const grid = document.getElementById("photo-grid");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.querySelector(".lightbox-close");
+    const prevBtn = document.getElementById("lightbox-prev");
+    const nextBtn = document.getElementById("lightbox-next");
 
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const closeBtn = document.querySelector(".lightbox-close");
+    let currentIndex = 0;
 
-  album.photos.forEach(photo => {
-    const img = document.createElement("img");
-    img.src = album.path + photo;
-    img.alt = album.title;
-    img.loading = "lazy"; 
+    // 2️⃣ Build photo grid
+    album.photos.forEach((photo, index) => {
+      const img = document.createElement("img");
+      img.src = album.path + photo;
+      img.alt = album.title;
+      img.loading = "lazy";
 
-    img.addEventListener("click", () => {
-      lightboxImg.src = img.src;
-      lightbox.classList.remove("hidden");
+      // Click opens lightbox
+      img.addEventListener("click", () => {
+        currentIndex = index;
+        lightboxImg.src = album.path + album.photos[currentIndex];
+        lightbox.classList.remove("hidden");
+      });
+
+      grid.appendChild(img);
     });
 
-    grid.appendChild(img);
-  });
-
-  closeBtn.addEventListener("click", () => {
-    lightbox.classList.add("hidden");
-    lightboxImg.src = "";
-  });
-
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
+    // 3️⃣ Lightbox close handlers
+    const closeLightbox = () => {
       lightbox.classList.add("hidden");
       lightboxImg.src = "";
-    }
-  });
+    };
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      lightbox.classList.add("hidden");
-      lightboxImg.src = "";
-    }
-  });
+    closeBtn.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // 4️⃣ Arrow navigation functions
+    const showPrev = () => {
+      currentIndex = (currentIndex - 1 + album.photos.length) % album.photos.length;
+      lightboxImg.src = album.path + album.photos[currentIndex];
+    };
+
+    const showNext = () => {
+      currentIndex = (currentIndex + 1) % album.photos.length;
+      lightboxImg.src = album.path + album.photos[currentIndex];
+    };
+
+    prevBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showPrev();
+    });
+
+    nextBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showNext();
+    });
+
+    // 5️⃣ Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (lightbox.classList.contains("hidden")) return; // only respond when open
+      if (e.key === "Escape") closeLightbox();
+      else if (e.key === "ArrowLeft") showPrev();
+      else if (e.key === "ArrowRight") showNext();
+    });
+  }
 </script>
+
+
 
 </body>
 </html>
