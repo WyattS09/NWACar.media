@@ -80,6 +80,7 @@
     const closeLightbox = () => {
       lightbox.classList.add("hidden");
       lightboxImg.src = "";
+      document.body.classList.remove("no-scroll");
     };
 
     closeBtn.addEventListener("click", closeLightbox);
