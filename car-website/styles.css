@@ -252,7 +252,13 @@ footer {
 /* ============================
    MOBILE RESPONSIVENESS
 ============================ */
-@media (max-width: 600px) {
+@media (max-width: 768px),
+       (hover: none) and (pointer: coarse) {
+
+  .lightbox-arrow {
+    display: none;
+  }
+
   .nav-links {
     gap: 1rem;
   }
@@ -264,4 +270,16 @@ footer {
   .album-card img {
     height: 150px; /* smaller thumbnails on mobile */
   }
+  .lightbox-arrow {
+    opacity: 0;
+  }
+  
+  .lightbox:hover .lightbox-arrow {
+    opacity: 1;
+  }
+  
+
 }
+
+
+
