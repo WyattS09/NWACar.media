@@ -70,6 +70,7 @@
         currentIndex = index;
         lightboxImg.src = album.path + album.photos[currentIndex];
         lightbox.classList.remove("hidden");
+        document.body.classlist.add("no-scroll");
       });
 
       grid.appendChild(img);

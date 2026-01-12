@@ -252,6 +252,11 @@ footer {
 /* ============================
    MOBILE RESPONSIVENESS
 ============================ */
+body.no-scroll {
+  overflow: hidden;
+  touch-action: none;
+}
+
 @media (max-width: 768px),
        (hover: none) and (pointer: coarse) {
 
@@ -263,7 +268,7 @@ footer {
     max-width: 95vw;
     max-height: 95vh;
   }
-  
+
   .nav-links {
     gap: 1rem;
   }
