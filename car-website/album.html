@@ -29,12 +29,19 @@
   <img id="lightbox-img" src="" alt="">
   <span id="lightbox-next" class="lightbox-arrow">&#10095;</span>
 </div>
+<div class="photo-grid"></div>
 
+<div class="load-more-wrapper">
+<button id="load-more" class="load-more">Load more</button>
+</div>
 
 
 <script src="albums.js"></script>
 
 <script>
+  const BATCH_SIZE = 25;
+let loadedCount = 0;
+
   // 1️⃣ Get album from URL
   const params = new URLSearchParams(window.location.search);
   const albumKey = params.get("album");
@@ -59,22 +66,53 @@
     let touchEndX = 0;
 
     // 2️⃣ Build photo grid
-    album.photos.forEach((photo, index) => {
-      const img = document.createElement("img");
-      img.src = album.path + photo;
-      img.alt = album.title;
-      img.loading = "lazy";
+    const BATCH_SIZE = 25;
+let loadedCount = 0;
 
-      // Click opens lightbox
-      img.addEventListener("click", () => {
-        currentIndex = index;
-        lightboxImg.src = album.path + album.photos[currentIndex];
-        lightbox.classList.remove("hidden");
-        document.body.classlist.add("no-scroll");
-      });
+function loadMorePhotos() {
+  const nextPhotos = album.photos.slice(
+    loadedCount,
+    loadedCount + BATCH_SIZE
+  );
 
-      grid.appendChild(img);
+  nextPhotos.forEach((photo, index) => {
+    const img = document.createElement("img");
+    img.src = album.path + photo;
+    img.alt = album.title;
+    img.loading = "lazy";
+
+    const actualIndex = loadedCount + index;
+
+    img.addEventListener("click", () => {
+      currentIndex = actualIndex;
+      lightboxImg.src = album.path + album.photos[currentIndex];
+      lightbox.classList.remove("hidden");
+      document.body.classList.add("no-scroll");
     });
+
+    grid.appendChild(img);
+  });
+
+  loadedCount += BATCH_SIZE;
+}
+
+// load first batch
+loadMorePhotos();
+
+// load more button
+const loadMoreBtn = document.getElementById("load-more");
+
+loadMoreBtn.addEventListener("click", () => {
+  loadMorePhotos();
+
+  if (loadedCount >= album.photos.length) {
+    loadMoreBtn.style.display = "none";
+  }
+});
+
+
+
+
 
     // 3️⃣ Lightbox close handlers
     const closeLightbox = () => {

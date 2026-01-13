@@ -169,6 +169,38 @@ body {
 /* ============================
    ALBUM PAGE STYLES
 ============================ */
+
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  padding-bottom: 5rem; /* lifts it off the bottom */
+}
+
+.load-more {
+  background: transparent;
+  color: #e5e5e5;
+  border: 1px solid #555;
+  padding: 0.9rem 3.2rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 999px; /* 👈 fully circular pill */
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.load-more:hover {
+  border-color: #aaa;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.load-more:active {
+  transform: translateY(0);
+}
+
+
 .album-header {
   text-align: center;
   padding: 2.5rem 1rem;
@@ -191,6 +223,8 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+
 
 .photo-grid img {
   width: 100%;      /* responsive width */
@@ -288,6 +322,14 @@ body.no-scroll {
     opacity: 1;
   }
   
+  .load-more-wrapper {
+    padding-bottom: 4rem;
+  }
+
+  .load-more {
+    padding: 1.1rem 3.5rem;
+    font-size: 0.9rem;
+  }
 
 }
 
