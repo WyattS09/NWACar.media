@@ -44,7 +44,7 @@ const albums = {
       "IMG_-37.jpeg",
       "IMG_-38.jpeg",
       "IMG_-39.jpeg",
-      "IMG_-40.jpeg",
+      "IMG_-40.jpeg"
     ]
   },
 
@@ -87,7 +87,7 @@ const albums = {
       "IMG_-32.jpeg",
       "IMG_-33.jpeg",
       "IMG_-34.jpeg",
-      "IMG_-35.jpeg",
+      "IMG_-35.jpeg"
     ]
   },
   
