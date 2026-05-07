@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="NWACar.Media — Automotive photography from Northwest Arkansas.">
-  <title>NWACar.Media</title>
+  <title>Album — NWACar.Media</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,38 +11,33 @@
   <nav class="navbar">
     <div class="logo">NWACar.Media</div>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="index.html">Home</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <header class="hero">
-    <!--
-      HERO IMAGES: create an images/hero/ folder and add your
-      best shots. Rename the files below to match, or change
-      the filenames here. Add or remove .hero-slide divs freely.
-    -->
-    <div class="hero-slide" style="background-image: url('images/hero/hero-1.jpeg');"></div>
-    <div class="hero-slide" style="background-image: url('images/hero/hero-2.jpeg');"></div>
-    <div class="hero-slide" style="background-image: url('images/hero/hero-3.jpeg');"></div>
-    <div class="hero-slide" style="background-image: url('images/hero/hero-4.jpeg');"></div>
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <div class="hero-eyebrow">Northwest Arkansas</div>
-      <h1>Automotive<br>Photography</h1>
-      <p class="hero-sub">Real Pictures. Real People. Real Machines.</p>
-    </div>
-
-    <div class="hero-indicators" id="hero-indicators"></div>
-    <div class="hero-progress" id="hero-progress"></div>
+  <header class="album-header">
+    <a class="back-link" href="index.html">← All albums</a>
+    <div class="album-header-meta" id="album-meta"></div>
+    <h1 id="album-title"></h1>
+    <p class="album-header-desc" id="album-description"></p>
   </header>
 
-  <section class="albums-section">
-    <div class="albums-eyebrow">Recent shoots</div>
-    <div class="album-grid" id="album-grid"></div>
-  </section>
+  <div class="photo-grid-wrap">
+    <div class="photo-grid" id="photo-grid"></div>
+  </div>
+
+  <div class="load-more-wrapper">
+    <button id="load-more" class="load-more">Load more</button>
+  </div>
+
+  <div id="lightbox" class="lightbox hidden">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <span id="lightbox-prev" class="lightbox-arrow">&#10094;</span>
+    <img id="lightbox-img" src="" alt="">
+    <span id="lightbox-next" class="lightbox-arrow">&#10095;</span>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
 
   <footer>
     <span>© 2025 NWACar.Media</span>
@@ -52,74 +46,142 @@
 
   <script src="albums.js"></script>
   <script>
-    /* ── Build album grid ── */
-    const grid = document.getElementById("album-grid");
+    const BATCH_SIZE = 25;
+    let loadedCount  = 0;
+    let currentIndex = 0;
+    let touchStartX  = 0;
 
-    Object.keys(albums).forEach((key, i) => {
-      const album = albums[key];
+    const params      = new URLSearchParams(window.location.search);
+    const albumKey    = params.get("album");
+    const album       = albums[albumKey];
 
-      const imgSrc = album.hasSubfolders
-        ? album.path + "grid/" + album.thumbnail
-        : album.path + album.thumbnail;
+    const grid        = document.getElementById("photo-grid");
+    const lightbox    = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const counter     = document.getElementById("lightbox-counter");
+    const loadMoreBtn = document.getElementById("load-more");
 
-      const link = document.createElement("a");
-      link.href = "album.html?album=" + key;
-      link.className = "album-card";
-      link.innerHTML =
-        '<img class="album-card-img" src="' + imgSrc + '" alt="' + album.title + '" loading="lazy">' +
-        '<div class="album-card-overlay"></div>' +
-        (i === 0 ? '<span class="new-badge">New</span>' : '') +
-        '<div class="album-card-info">' +
-          '<div class="album-card-date">' + (album.date || '') + '</div>' +
-          '<div class="album-card-title">' + album.title + '</div>' +
-        '</div>' +
-        '<span class="album-card-arrow">→</span>';
+    if (!album) {
+      document.getElementById("album-title").textContent = "Album not found";
+      loadMoreBtn.style.display = "none";
+    } else {
+      document.title = album.title + " — NWACar.Media";
+      document.getElementById("album-title").textContent = album.title;
+      document.getElementById("album-meta").textContent  = album.date || "";
 
-      grid.appendChild(link);
-    });
+      const descEl = document.getElementById("album-description");
+      if (album.description) {
+        descEl.textContent = album.description;
+      } else {
+        descEl.style.display = "none";
+      }
 
-    /* ── Hero slideshow ── */
-    (function () {
-      const slides     = Array.from(document.querySelectorAll(".hero-slide"));
-      const indicators = document.getElementById("hero-indicators");
-      const progressEl = document.getElementById("hero-progress");
+      /* ── Path helpers ──
+         Albums with hasSubfolders:true use grid/ for thumbnails
+         and full/ for lightbox. All other albums serve photos
+         directly from the album path. */
+      function gridSrc(photo) {
+        return album.hasSubfolders
+          ? album.path + "grid/" + photo
+          : album.path + photo;
+      }
 
-      if (!slides.length) return;
+      function fullSrc(photo) {
+        return album.hasSubfolders
+          ? album.path + "full/" + photo
+          : album.path + photo;
+      }
 
-      const INTERVAL = 6000;
-      let current    = 0;
-      let startTime  = null;
+      /* ── Load batch ── */
+      function loadMorePhotos() {
+        const batch = album.photos.slice(loadedCount, loadedCount + BATCH_SIZE);
 
-      slides.forEach((_, i) => {
-        const dot = document.createElement("div");
-        dot.className = "hero-dot" + (i === 0 ? " active" : "");
-        dot.addEventListener("click", () => goTo(i));
-        indicators.appendChild(dot);
+        batch.forEach(function(photo, i) {
+          const img   = document.createElement("img");
+          img.src     = gridSrc(photo);
+          img.alt     = album.title;
+          img.loading = "lazy";
+
+          const idx = loadedCount + i;
+          img.addEventListener("click", function() { openLightbox(idx); });
+          grid.appendChild(img);
+        });
+
+        loadedCount += batch.length;
+        if (loadedCount >= album.photos.length) {
+          loadMoreBtn.style.display = "none";
+        }
+      }
+
+      /* ── Counter ── */
+      function updateCounter() {
+        counter.textContent = (currentIndex + 1) + " / " + album.photos.length;
+      }
+
+      /* ── Lightbox ── */
+      function openLightbox(idx) {
+        currentIndex    = idx;
+        lightboxImg.src = fullSrc(album.photos[currentIndex]);
+        updateCounter();
+        lightbox.classList.remove("hidden");
+        document.body.classList.add("no-scroll");
+      }
+
+      function closeLightbox() {
+        lightbox.classList.add("hidden");
+        lightboxImg.src = "";
+        document.body.classList.remove("no-scroll");
+      }
+
+      function showImage(idx) {
+        currentIndex = (idx + album.photos.length) % album.photos.length;
+        lightboxImg.classList.add("fading");
+        setTimeout(function() {
+          lightboxImg.src = fullSrc(album.photos[currentIndex]);
+          updateCounter();
+          lightboxImg.classList.remove("fading");
+        }, 150);
+      }
+
+      function showPrev() { showImage(currentIndex - 1); }
+      function showNext() { showImage(currentIndex + 1); }
+
+      /* ── Listeners ── */
+      loadMoreBtn.addEventListener("click", loadMorePhotos);
+
+      document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+      document.getElementById("lightbox-prev").addEventListener("click", function(e) {
+        e.stopPropagation(); showPrev();
+      });
+      document.getElementById("lightbox-next").addEventListener("click", function(e) {
+        e.stopPropagation(); showNext();
       });
 
-      const dots = Array.from(indicators.querySelectorAll(".hero-dot"));
+      lightbox.addEventListener("click", function(e) {
+        if (e.target === lightbox) closeLightbox();
+      });
 
-      function goTo(idx) {
-        slides[current].classList.remove("active");
-        dots[current].classList.remove("active");
-        current = idx;
-        slides[current].classList.add("active");
-        dots[current].classList.add("active");
-        startTime = null;
-      }
+      document.addEventListener("keydown", function(e) {
+        if (lightbox.classList.contains("hidden")) return;
+        if (e.key === "Escape")     closeLightbox();
+        if (e.key === "ArrowLeft")  showPrev();
+        if (e.key === "ArrowRight") showNext();
+      });
 
-      function tick(ts) {
-        if (!startTime) startTime = ts;
-        const elapsed = ts - startTime;
-        const pct = Math.min((elapsed / INTERVAL) * 100, 100);
-        progressEl.style.width = pct + "%";
-        if (elapsed >= INTERVAL) goTo((current + 1) % slides.length);
-        requestAnimationFrame(tick);
-      }
+      lightbox.addEventListener("touchstart", function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
 
-      slides[0].classList.add("active");
-      requestAnimationFrame(tick);
-    })();
+      lightbox.addEventListener("touchend", function(e) {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) { showPrev(); } else { showNext(); }
+        }
+      }, { passive: true });
+
+      /* ── First load ── */
+      loadMorePhotos();
+    }
   </script>
 
 </body>
