@@ -44,9 +44,7 @@
       link.className = "album-card";
 
       const img = document.createElement("img");
-      img.src = album.hasSubfolders
-        ? `${album.path}grid/${album.thumbnail}`
-        : `${album.path}${album.thumbnail}`;
+      img.src = `${album.path}grid/${album.thumbnail}`;
       img.alt = album.title;
       img.className = "album-card-img";
       img.loading = "lazy";
