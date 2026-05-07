@@ -4,6 +4,7 @@ const albums = {
     title: "Apr. 11 drift TOGE",
     path: "images/albums/apr-11-drift-toge/",
     thumbnail: "thumb.jpeg",
+    hasSubfolders: true,
     photos: [
       "thumb.jpeg",
       "IMG_ - 1.jpeg",
@@ -52,6 +53,7 @@ const albums = {
     title: "Apr. 8 Carspot",
     path: "images/albums/apr-8-carspot/",
     thumbnail: "thumb.jpeg",
+    hasSubfolders: true,
     photos: [
       "thumb.jpeg",
       "IMG_ - 1.jpeg",
@@ -95,6 +97,7 @@ const albums = {
     title: "Mar.1 Mar. Blacktop",
     path: "images/albums/mar-1-mar-blacktop/",
     thumbnail: "thumb.jpeg",
+    hasSubfolders: true,
     photos: [
       "thumb.jpeg",
       "IMG_0572.jpeg",
@@ -158,6 +161,7 @@ const albums = {
     title: "Jan. 11 Supercars of Oklahoma",
     path: "images/albums/jan-11-supercars/",
     thumbnail: "thumb.jpeg",
+    hasSubfolders: true,
     photos: [
       "thumb.jpeg",
       "Image 1.jpeg",
@@ -279,6 +283,7 @@ const albums = {
     title: "Jan. 4 Jan. carshow",
     path: "images/albums/jan-4-jan-carshow/",
     thumbnail: "thumb.jpeg",
+    hasSubfolders: true,
     photos: [
       "thumb.jpeg",
       "IMG_9998.jpeg",
@@ -350,6 +355,7 @@ const albums = {
       title: "Dec. 21 Sunday Shoot",
       path: "images/albums/dec-21-sunday-shoot/",
       thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
       photos: [
         "IMG_9855.jpeg",
         "IMG_9862.jpeg",
@@ -394,6 +400,7 @@ const albums = {
       title: "Nov. 2 Nov. carshow",
       path: "images/albums/nov-2-nov-carshow/",
       thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
       photos: [
         "IMG_4927.jpeg",
         "IMG_4928.jpeg",

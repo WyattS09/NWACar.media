@@ -69,16 +69,17 @@
          Older albums serve photos directly from the album path.
          We detect by checking whether the album has a "grid" subfolder
          via the path convention used in albums.js. */
-      function gridSrc(photo) {
-        /* apr-11 and apr-8 use grid/full subfolders; older ones don't */
-        const hasSubfolders = albumKey === "apr-11-drift-toge" || albumKey === "apr-8-carspot";
-        return hasSubfolders ? album.path + "grid/" + photo : album.path + photo;
-      }
+          function gridSrc(photo) {
+            return album.hasSubfolders
+            ? album.path + "grid/" + photo
+            : album.path + photo;
+}
 
-      function fullSrc(photo) {
-        const hasSubfolders = albumKey === "apr-11-drift-toge" || albumKey === "apr-8-carspot";
-        return hasSubfolders ? album.path + "full/" + photo : album.path + photo;
-      }
+          function fullSrc(photo) {
+            return album.hasSubfolders
+              ? album.path + "full/" + photo
+              : album.path + photo;
+}
 
       /* ── Load photo batch ── */
       function loadMorePhotos() {
