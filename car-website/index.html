@@ -18,121 +18,115 @@
   </nav>
 
   <header class="hero">
-    <canvas id="hero-canvas"></canvas>
+    <!--
+      HERO IMAGES: create an images/hero/ folder and add your
+      best shots. Rename the files below to match, or change
+      the filenames here. Add or remove .hero-slide divs freely.
+    -->
+    <div class="hero-slide" style="background-image: url('images/hero/Image\ 41.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/Image\ 46.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_0598.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_4965.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_5068.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_5072.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_5084.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_5278.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_5292.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/IMG_9978.jpeg');"></div>
+
+
+
+    <div class="hero-overlay"></div>
+
     <div class="hero-content">
-      <h1>Automotive Photography</h1>
-      <p>Real Pictures. Real People. Real Machines.</p>
+      <div class="hero-eyebrow">Northwest Arkansas</div>
+      <h1>Automotive<br>Photography</h1>
+      <p class="hero-sub">Real Pictures. Real People. Real Machines.</p>
     </div>
+
+    <div class="hero-indicators" id="hero-indicators"></div>
+    <div class="hero-progress" id="hero-progress"></div>
   </header>
 
-  <main class="album-grid" id="album-grid"></main>
+  <section class="albums-section">
+    <div class="albums-eyebrow">Recent shoots</div>
+    <div class="album-grid" id="album-grid"></div>
+  </section>
 
   <footer>
-    <p>© 2025 NWACar.Media</p>
+    <span>© 2025 NWACar.Media</span>
+    <a href="https://www.instagram.com/project.nwacar.media" target="_blank" rel="noopener">@project.nwacar.media</a>
   </footer>
 
   <script src="albums.js"></script>
   <script>
-    /* ── Album grid ── */
+    /* ── Build album grid ── */
     const grid = document.getElementById("album-grid");
 
-    Object.keys(albums).forEach(key => {
+    Object.keys(albums).forEach((key, i) => {
       const album = albums[key];
 
+      const imgSrc = album.hasSubfolders
+        ? album.path + "grid/" + album.thumbnail
+        : album.path + album.thumbnail;
+
       const link = document.createElement("a");
-      link.href = `album.html?album=${key}`;
+      link.href = "album.html?album=" + key;
       link.className = "album-card";
+      link.innerHTML =
+        '<img class="album-card-img" src="' + imgSrc + '" alt="' + album.title + '" loading="lazy">' +
+        '<div class="album-card-overlay"></div>' +
+        (i === 0 ? '<span class="new-badge">New</span>' : '') +
+        '<div class="album-card-info">' +
+          '<div class="album-card-date">' + (album.date || '') + '</div>' +
+          '<div class="album-card-title">' + album.title + '</div>' +
+        '</div>' +
+        '<span class="album-card-arrow">→</span>';
 
-      const img = document.createElement("img");
-      img.src = `${album.path}grid/${album.thumbnail}`;
-      img.alt = album.title;
-      img.className = "album-card-img";
-      img.loading = "lazy";
-
-      const title = document.createElement("div");
-      title.className = "album-title";
-      title.textContent = album.title;
-
-      link.appendChild(img);
-      link.appendChild(title);
       grid.appendChild(link);
     });
 
-    /* ── Hero particle animation ── */
+    /* ── Hero slideshow ── */
     (function () {
-      const canvas = document.getElementById("hero-canvas");
-      const ctx = canvas.getContext("2d");
-      let particles = [];
-      const COUNT = 60;
+      const slides     = Array.from(document.querySelectorAll(".hero-slide"));
+      const indicators = document.getElementById("hero-indicators");
+      const progressEl = document.getElementById("hero-progress");
 
-      function resize() {
-        canvas.width  = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+      if (!slides.length) return;
+
+      const INTERVAL = 6000;
+      let current    = 0;
+      let startTime  = null;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement("div");
+        dot.className = "hero-dot" + (i === 0 ? " active" : "");
+        dot.addEventListener("click", () => goTo(i));
+        indicators.appendChild(dot);
+      });
+
+      const dots = Array.from(indicators.querySelectorAll(".hero-dot"));
+
+      function goTo(idx) {
+        slides[current].classList.remove("active");
+        dots[current].classList.remove("active");
+        current = idx;
+        slides[current].classList.add("active");
+        dots[current].classList.add("active");
+        startTime = null;
       }
 
-      function rand(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
-      function initParticles() {
-        particles = [];
-        for (let i = 0; i < COUNT; i++) {
-          particles.push({
-            x:  rand(0, canvas.width),
-            y:  rand(0, canvas.height),
-            vx: rand(-0.15, 0.15),
-            vy: rand(-0.15, 0.15),
-            r:  rand(1, 2.5),
-          });
-        }
-      }
-
-      function drawLines() {
-        const maxDist = 120;
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < maxDist) {
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(255,255,255,${0.06 * (1 - dist / maxDist)})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-        }
-      }
-
-      function tick() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        for (const p of particles) {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
-          if (p.y < 0 || p.y > canvas.height)  p.vy *= -1;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(255,255,255,0.25)";
-          ctx.fill();
-        }
-
-        drawLines();
+      function tick(ts) {
+        if (!startTime) startTime = ts;
+        const elapsed = ts - startTime;
+        const pct = Math.min((elapsed / INTERVAL) * 100, 100);
+        progressEl.style.width = pct + "%";
+        if (elapsed >= INTERVAL) goTo((current + 1) % slides.length);
         requestAnimationFrame(tick);
       }
 
-      resize();
-      initParticles();
-      tick();
-
-      window.addEventListener("resize", () => {
-        resize();
-        initParticles();
-      });
+      slides[0].classList.add("active");
+      requestAnimationFrame(tick);
     })();
   </script>
 

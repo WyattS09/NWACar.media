@@ -1,506 +1,600 @@
-/* ============================================================
-   NWACAR.MEDIA — styles.css
-   Vibe: Dark & Minimal
-   To restyle: edit the variables in :root only.
-   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
 
 /* ============================================================
-   DESIGN TOKENS — edit here to change the whole vibe
+   DESIGN TOKENS — edit here to restyle the whole site
    ============================================================ */
-   :root {
-    --bg-base:        #0a0a0a;
-    --bg-surface:     #111111;
-    --bg-raised:      #161616;
-    --border:         #1f1f1f;
-    --border-hover:   #2e2e2e;
-  
-    --text-primary:   #eeeeee;
-    --text-secondary: #666666;
-    --text-muted:     #333333;
-  
-    --accent:         #eeeeee;        /* change this one hex for a whole new accent color */
-    --accent-dim:     #333333;
-  
-    --font-display:   'Bebas Neue', 'Arial Narrow', Arial, sans-serif;
-    --font-body:      'DM Sans', 'Helvetica Neue', Helvetica, sans-serif;
-    --font-mono:      'DM Mono', monospace;
-  
-    --radius-sm:      4px;
-    --radius-md:      6px;
-    --radius-lg:      10px;
-  
-    --nav-height:     56px;
-    --transition:     0.2s ease;
-  }
-  
-  /* ============================================================
-     RESET & BASE
-     ============================================================ */
-  *, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  
-  body.no-scroll {
-    overflow: hidden;
-  }
-  
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  img {
-    display: block;
-    max-width: 100%;
-  }
-  
-  /* ============================================================
-     GOOGLE FONTS IMPORT
-     ============================================================ */
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap');
-  
-  /* ============================================================
-     NAVBAR
-     ============================================================ */
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: var(--nav-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
-    background: rgba(10, 10, 10, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .logo {
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    letter-spacing: 0.12em;
-    color: var(--text-primary);
-    text-transform: uppercase;
-  }
-  
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .nav-links a {
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    transition: color var(--transition);
-  }
-  
-  .nav-links a:hover,
-  .nav-links a.active {
-    color: var(--text-primary);
-  }
-  
-  /* ============================================================
-     HERO
-     ============================================================ */
-  .hero {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 380px;
-    padding: 4rem 2rem;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  /* Animated particle canvas sits behind text */
-  #hero-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.35;
-    pointer-events: none;
-  }
-  
-  .hero-content {
-    position: relative;
-    z-index: 1;
-  }
-  
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 8vw, 6rem);
-    letter-spacing: 0.06em;
-    line-height: 1;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  
-  .hero p {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-  }
-  
-  /* ============================================================
-     HOMEPAGE ALBUM GRID
-     ============================================================ */
-  .album-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1px;
-    background-color: var(--border);
-    padding: 0;
-    max-width: 1400px;
-    margin: 3rem auto;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  
-  .album-card {
-    background: var(--bg-surface);
-    overflow: hidden;
-    cursor: pointer;
-    display: block;
-    position: relative;
-  }
-  
-  .album-card:hover .album-card-img {
-    transform: scale(1.04);
-  }
-  
-  .album-card:hover .album-title {
-    color: var(--text-primary);
-  }
-  
-  .album-card-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
-  }
-  
-  .album-title {
-    padding: 0.75rem 1rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    background: var(--bg-surface);
-    transition: color var(--transition);
-    border-top: 1px solid var(--border);
-  }
-  
-  /* ============================================================
-     ALBUM PAGE HEADER
-     ============================================================ */
-  .album-header {
-    text-align: center;
-    padding: 3rem 2rem 2rem;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .album-header h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-  }
-  
-  .album-header p {
-    font-size: 0.75rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-  }
-  
-  /* ============================================================
-     PHOTO GRID
-     ============================================================ */
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1px;
-    background-color: var(--border);
-    padding: 0;
-    max-width: 1400px;
-    margin: 2rem auto;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  
-  .photo-grid img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    display: block;
-    cursor: pointer;
-    transition: opacity var(--transition);
-    content-visibility: auto;
-    contain-intrinsic-size: 260px 240px;
-  }
-  
-  .photo-grid img:hover {
-    opacity: 0.85;
-  }
-  
-  /* ============================================================
-     LOAD MORE BUTTON
-     ============================================================ */
-  .load-more-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 3rem 0 5rem;
-  }
-  
-  .load-more {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-hover);
-    padding: 0.8rem 3rem;
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-  
-  .load-more:hover {
-    border-color: var(--text-secondary);
-    color: var(--text-primary);
-    transform: translateY(-1px);
-  }
-  
-  .load-more:active {
-    transform: translateY(0);
-  }
-  
-  /* ============================================================
-     LIGHTBOX
-     ============================================================ */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  }
-  
-  .lightbox.hidden {
-    display: none;
-  }
-  
-  .lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: var(--radius-sm);
-    user-select: none;
-  }
-  
-  .lightbox-close {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.75rem;
-    font-size: 1.75rem;
-    color: var(--text-secondary);
-    cursor: pointer;
-    line-height: 1;
-    transition: color var(--transition);
-  }
-  
-  .lightbox-close:hover {
-    color: var(--text-primary);
-  }
-  
-  .lightbox-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    color: var(--text-secondary);
-    cursor: pointer;
-    user-select: none;
-    padding: 1rem;
-    transition: color var(--transition);
-    z-index: 1000;
-  }
-  
-  .lightbox-arrow:hover {
-    color: var(--text-primary);
-  }
-  
-  #lightbox-prev { left: 0.5rem; }
-  #lightbox-next { right: 0.5rem; }
-  
-  /* ============================================================
-     CONTACT PAGE
-     ============================================================ */
-  .contact-container {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 5rem 2rem;
-  }
-  
-  .contact-container h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-  
-  .contact-description {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: 3rem;
-    border-left: 1px solid var(--border-hover);
-    padding-left: 1.25rem;
-  }
-  
-  .contact-box {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  
-  .contact-item {
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    transition: background var(--transition);
-  }
-  
-  .contact-item:last-child {
-    border-bottom: none;
-  }
-  
-  .contact-item:hover {
-    background: var(--bg-surface);
-  }
-  
-  .contact-item h3 {
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    font-weight: 400;
-  }
-  
-  .contact-item a {
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    transition: color var(--transition);
-  }
-  
-  .contact-item a:hover {
-    color: var(--text-secondary);
-  }
-  
-  /* ============================================================
-     FOOTER
-     ============================================================ */
-  footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border-top: 1px solid var(--border);
-  }
-  
-  /* ============================================================
-     MOBILE
-     ============================================================ */
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 0 1.25rem;
-    }
-  
-    .nav-links {
-      gap: 1.25rem;
-    }
-  
-    .hero {
-      min-height: 280px;
-      padding: 3rem 1.25rem;
-    }
-  
-    .album-grid {
-      margin: 1.5rem 0;
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    }
-  
-    .album-card-img {
-      height: 140px;
-    }
-  
-    .photo-grid {
-      margin: 1.5rem 0;
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    }
-  
-    .photo-grid img {
-      height: 160px;
-    }
-  
-    .lightbox-arrow {
-      display: none;
-    }
-  
-    .lightbox img {
-      max-width: 98vw;
-      max-height: 92vh;
-    }
-  
-    .contact-container {
-      padding: 3rem 1.25rem;
-    }
-  }
+:root {
+  --bg-base:        #0c0c0e;
+  --bg-surface:     #141418;
+  --bg-raised:      #161620;
+  --border:         #1c1c20;
+  --border-hover:   #2a2a32;
+
+  --text-primary:   #e8e8f0;
+  --text-secondary: #484858;
+  --text-muted:     #28282e;
+
+  --accent:         #5b8fd4;
+  --accent-dim:     rgba(91, 143, 212, 0.15);
+  --accent-border:  rgba(91, 143, 212, 0.28);
+
+  --font-display:   'Bebas Neue', 'Arial Narrow', Arial, sans-serif;
+  --font-body:      'DM Sans', 'Helvetica Neue', Helvetica, sans-serif;
+
+  --radius-sm:      6px;
+  --radius-md:      12px;
+
+  --nav-height:     52px;
+  --transition:     0.2s ease;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.no-scroll { overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  background: rgba(12, 12, 14, 0.93);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.nav-links { list-style: none; display: flex; gap: 2rem; }
+
+.nav-links a {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--accent); }
+
+/* ============================================================
+   HERO SLIDESHOW
+   ============================================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--nav-height));
+  min-height: 500px;
+  max-height: 880px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  animation: heroZoom 7s ease forwards;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.05); }
+  to   { transform: scale(1); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(12, 12, 14, 0.90) 0%,
+    rgba(12, 12, 14, 0.20) 50%,
+    rgba(12, 12, 14, 0.05) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 3rem 2.5rem;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+
+.hero-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.hero-indicators {
+  position: absolute;
+  bottom: 3rem;
+  right: 2.5rem;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  z-index: 2;
+}
+
+.hero-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.hero-dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
+}
+
+.hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 2;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   HOMEPAGE ALBUM GRID
+   ============================================================ */
+.albums-section {
+  max-width: 1300px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.albums-eyebrow {
+  font-size: 0.66rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* First card spans full width */
+.album-card:first-child {
+  grid-column: span 2;
+}
+
+.album-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: block;
+  background: var(--bg-surface);
+}
+
+.album-card:first-child .album-card-img { height: 440px; }
+
+.album-card-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s ease;
+}
+
+.album-card:hover .album-card-img { transform: scale(1.04); }
+
+.album-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 58%);
+}
+
+.album-card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 1.25rem;
+}
+
+.album-card-date {
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.album-card-title {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.album-card:first-child .album-card-title { font-size: 1.35rem; }
+
+.album-card-arrow {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.25rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.album-card:hover .album-card-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.new-badge {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+  z-index: 1;
+}
+
+/* ============================================================
+   ALBUM PAGE HEADER
+   ============================================================ */
+.album-header {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.75rem;
+  transition: opacity var(--transition);
+}
+
+.back-link:hover { opacity: 0.7; }
+
+.album-header-meta {
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.album-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.album-header-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 560px;
+}
+
+/* ============================================================
+   PHOTO GRID
+   ============================================================ */
+.photo-grid-wrap {
+  max-width: 1300px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: opacity var(--transition), transform 0.3s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 260px 240px;
+}
+
+.photo-grid img:hover {
+  opacity: 0.85;
+  transform: scale(1.015);
+}
+
+/* ============================================================
+   LOAD MORE
+   ============================================================ */
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 0 5rem;
+}
+
+.load-more {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hover);
+  padding: 0.8rem 3rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.load-more:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.load-more:active { transform: translateY(0); }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 8, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.lightbox.hidden { display: none; }
+
+#lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  user-select: none;
+  transition: opacity 0.15s ease;
+}
+
+#lightbox-img.fading { opacity: 0; }
+
+.lightbox-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.75rem;
+  font-size: 1.6rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition);
+  z-index: 1001;
+}
+
+.lightbox-close:hover { color: var(--text-primary); }
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  padding: 1rem;
+  transition: color var(--transition);
+  z-index: 1000;
+}
+
+.lightbox-arrow:hover { color: var(--accent); }
+
+#lightbox-prev { left: 0.5rem; }
+#lightbox-next { right: 0.5rem; }
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary);
+  z-index: 1001;
+}
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+.contact-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.contact-container h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.contact-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  border-left: 2px solid var(--accent-border);
+  padding-left: 1.25rem;
+}
+
+.contact-box {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.contact-item {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.contact-item:last-child { border-bottom: none; }
+.contact-item:hover { background: var(--bg-surface); }
+
+.contact-item h3 {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.contact-item a {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
+
+.contact-item a:hover { color: var(--accent); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.75rem 2rem;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--border);
+}
+
+footer a {
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+footer a:hover { color: var(--accent); }
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .navbar { padding: 0 1.25rem; }
+  .nav-links { gap: 1.25rem; }
+
+  .hero { min-height: 420px; max-height: 620px; }
+  .hero-content { padding: 2rem 1.25rem; }
+  .hero-indicators { right: 1.25rem; bottom: 2rem; }
+
+  .albums-section { padding: 0 1rem; margin: 1.75rem auto; }
+  .album-grid { grid-template-columns: 1fr; gap: 8px; }
+  .album-card:first-child { grid-column: span 1; }
+  .album-card:first-child .album-card-img { height: 280px; }
+  .album-card-img { height: 200px; }
+
+  .album-header { padding: 2rem 1.25rem 1.5rem; }
+  .photo-grid-wrap { padding: 0 1rem; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+  .photo-grid img { height: 160px; }
+
+  .lightbox-arrow { display: none; }
+  #lightbox-img { max-width: 98vw; max-height: 88vh; }
+
+  .contact-container { padding: 3rem 1.25rem; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}

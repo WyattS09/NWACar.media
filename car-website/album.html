@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Album — NWACar.Media</title>
+  <meta name="description" content="NWACar.Media — Automotive photography from Northwest Arkansas.">
+  <title>NWACar.Media</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,152 +12,114 @@
   <nav class="navbar">
     <div class="logo">NWACar.Media</div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html" class="active">Home</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <header class="album-header">
-    <h1 id="album-title"></h1>
-    <p id="album-description"></p>
+  <header class="hero">
+    <!--
+      HERO IMAGES: create an images/hero/ folder and add your
+      best shots. Rename the files below to match, or change
+      the filenames here. Add or remove .hero-slide divs freely.
+    -->
+    <div class="hero-slide" style="background-image: url('images/hero/hero-1.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/hero-2.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/hero-3.jpeg');"></div>
+    <div class="hero-slide" style="background-image: url('images/hero/hero-4.jpeg');"></div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Northwest Arkansas</div>
+      <h1>Automotive<br>Photography</h1>
+      <p class="hero-sub">Real Pictures. Real People. Real Machines.</p>
+    </div>
+
+    <div class="hero-indicators" id="hero-indicators"></div>
+    <div class="hero-progress" id="hero-progress"></div>
   </header>
 
-  <main class="photo-grid" id="photo-grid"></main>
-
-  <div class="load-more-wrapper">
-    <button id="load-more" class="load-more">Load more</button>
-  </div>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox hidden">
-    <span class="lightbox-close" id="lightbox-close">&times;</span>
-    <span id="lightbox-prev" class="lightbox-arrow">&#10094;</span>
-    <img id="lightbox-img" src="" alt="">
-    <span id="lightbox-next" class="lightbox-arrow">&#10095;</span>
-  </div>
+  <section class="albums-section">
+    <div class="albums-eyebrow">Recent shoots</div>
+    <div class="album-grid" id="album-grid"></div>
+  </section>
 
   <footer>
-    <p>© 2025 NWACar.Media</p>
+    <span>© 2025 NWACar.Media</span>
+    <a href="https://www.instagram.com/project.nwacar.media" target="_blank" rel="noopener">@project.nwacar.media</a>
   </footer>
 
   <script src="albums.js"></script>
   <script>
-    const BATCH_SIZE = 25;
-    let loadedCount = 0;
-    let currentIndex = 0;
-    let touchStartX = 0;
+    /* ── Build album grid ── */
+    const grid = document.getElementById("album-grid");
 
-    /* ── Get album from URL ── */
-    const params   = new URLSearchParams(window.location.search);
-    const albumKey = params.get("album");
-    const album    = albums[albumKey];
+    Object.keys(albums).forEach((key, i) => {
+      const album = albums[key];
 
-    const grid       = document.getElementById("photo-grid");
-    const lightbox   = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    const loadMoreBtn = document.getElementById("load-more");
+      const imgSrc = album.hasSubfolders
+        ? album.path + "grid/" + album.thumbnail
+        : album.path + album.thumbnail;
 
-    if (!album) {
-      document.getElementById("album-title").textContent = "Album not found";
-      loadMoreBtn.style.display = "none";
-    } else {
-      document.title = `${album.title} — NWACar.Media`;
-      document.getElementById("album-title").textContent = album.title;
-      document.getElementById("album-description").textContent = album.description || "";
+      const link = document.createElement("a");
+      link.href = "album.html?album=" + key;
+      link.className = "album-card";
+      link.innerHTML =
+        '<img class="album-card-img" src="' + imgSrc + '" alt="' + album.title + '" loading="lazy">' +
+        '<div class="album-card-overlay"></div>' +
+        (i === 0 ? '<span class="new-badge">New</span>' : '') +
+        '<div class="album-card-info">' +
+          '<div class="album-card-date">' + (album.date || '') + '</div>' +
+          '<div class="album-card-title">' + album.title + '</div>' +
+        '</div>' +
+        '<span class="album-card-arrow">→</span>';
 
-      /* ── Determine image path helper ──
-         Newer albums have grid/ and full/ subfolders.
-         Older albums serve photos directly from the album path.
-         We detect by checking whether the album has a "grid" subfolder
-         via the path convention used in albums.js. */
-      function gridSrc(photo) {
-        /* apr-11 and apr-8 use grid/full subfolders; older ones don't */
-        const hasSubfolders = albumKey === "apr-11-drift-toge" || albumKey === "apr-8-carspot";
-        return hasSubfolders ? album.path + "grid/" + photo : album.path + photo;
-      }
+      grid.appendChild(link);
+    });
 
-      function fullSrc(photo) {
-        const hasSubfolders = albumKey === "apr-11-drift-toge" || albumKey === "apr-8-carspot";
-        return hasSubfolders ? album.path + "full/" + photo : album.path + photo;
-      }
+    /* ── Hero slideshow ── */
+    (function () {
+      const slides     = Array.from(document.querySelectorAll(".hero-slide"));
+      const indicators = document.getElementById("hero-indicators");
+      const progressEl = document.getElementById("hero-progress");
 
-      /* ── Load photo batch ── */
-      function loadMorePhotos() {
-        const batch = album.photos.slice(loadedCount, loadedCount + BATCH_SIZE);
+      if (!slides.length) return;
 
-        batch.forEach((photo, i) => {
-          const img = document.createElement("img");
-          img.src = gridSrc(photo);
-          img.alt = album.title;
-          img.loading = "lazy";
+      const INTERVAL = 6000;
+      let current    = 0;
+      let startTime  = null;
 
-          const idx = loadedCount + i;
-          img.addEventListener("click", () => openLightbox(idx));
-          grid.appendChild(img);
-        });
-
-        loadedCount += batch.length;
-
-        if (loadedCount >= album.photos.length) {
-          loadMoreBtn.style.display = "none";
-        }
-      }
-
-      /* ── Lightbox ── */
-      function openLightbox(idx) {
-        currentIndex = idx;
-        lightboxImg.src = fullSrc(album.photos[currentIndex]);
-        lightbox.classList.remove("hidden");
-        document.body.classList.add("no-scroll");
-      }
-
-      function closeLightbox() {
-        lightbox.classList.add("hidden");
-        lightboxImg.src = "";
-        document.body.classList.remove("no-scroll");
-      }
-
-      function showPrev() {
-        currentIndex = (currentIndex - 1 + album.photos.length) % album.photos.length;
-        lightboxImg.src = fullSrc(album.photos[currentIndex]);
-      }
-
-      function showNext() {
-        currentIndex = (currentIndex + 1) % album.photos.length;
-        lightboxImg.src = fullSrc(album.photos[currentIndex]);
-      }
-
-      /* ── Event listeners ── */
-      loadMoreBtn.addEventListener("click", loadMorePhotos);
-
-      document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
-      document.getElementById("lightbox-prev").addEventListener("click", (e) => { e.stopPropagation(); showPrev(); });
-      document.getElementById("lightbox-next").addEventListener("click", (e) => { e.stopPropagation(); showNext(); });
-
-      lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) closeLightbox();
+      slides.forEach((_, i) => {
+        const dot = document.createElement("div");
+        dot.className = "hero-dot" + (i === 0 ? " active" : "");
+        dot.addEventListener("click", () => goTo(i));
+        indicators.appendChild(dot);
       });
 
-      document.addEventListener("keydown", (e) => {
-        if (lightbox.classList.contains("hidden")) return;
-        if (e.key === "Escape")      closeLightbox();
-        if (e.key === "ArrowLeft")   showPrev();
-        if (e.key === "ArrowRight")  showNext();
-      });
+      const dots = Array.from(indicators.querySelectorAll(".hero-dot"));
 
-      /* ── Touch swipe ── */
-      lightbox.addEventListener("touchstart", (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
+      function goTo(idx) {
+        slides[current].classList.remove("active");
+        dots[current].classList.remove("active");
+        current = idx;
+        slides[current].classList.add("active");
+        dots[current].classList.add("active");
+        startTime = null;
+      }
 
-      lightbox.addEventListener("touchend", (e) => {
-        const diff = e.changedTouches[0].screenX - touchStartX;
-        if (Math.abs(diff) > 50) diff > 0 ? showPrev() : showNext();
-      }, { passive: true });
+      function tick(ts) {
+        if (!startTime) startTime = ts;
+        const elapsed = ts - startTime;
+        const pct = Math.min((elapsed / INTERVAL) * 100, 100);
+        progressEl.style.width = pct + "%";
+        if (elapsed >= INTERVAL) goTo((current + 1) % slides.length);
+        requestAnimationFrame(tick);
+      }
 
-      /* ── Initial load ── */
-      loadMorePhotos();
-    }
+      slides[0].classList.add("active");
+      requestAnimationFrame(tick);
+    })();
   </script>
 
 </body>
