@@ -17,9 +17,90 @@
 
    const albums = {
 
+
+
+/*
+    "july-5-july-blacktop": {
+      title: "July Blacktop",
+      date: "Jul. 5, 2026",
+      description: "",
+      path: "images/albums/apr-11-drift-toge/",
+      thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
+      photos: [
+
+    "june-16-tuner-tuesday": {
+      title: "Tuner Tuesday",
+      date: "Jul. 16, 2026",
+      description: "",
+      path: "images/albums/apr-11-drift-toge/",
+      thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
+      photos: [
+
+    "june-5-car-museum": {
+      title: "Newport Car Museum",
+      date: "Jun. 5, 2026",
+      description: "",
+      path: "images/albums/apr-11-drift-toge/",
+      thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
+      photos: [
+
+    "may-23-wings&-wheels": {
+      title: "Wings & Wheels",
+      date: "May. 23, 2026",
+      description: "",
+      path: "images/albums/apr-11-drift-toge/",
+      thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
+      photos: [
+
+*/
+        
+    "may-3-may-blacktop": {
+      title: "May Blacktop",
+      date: "May. 3, 2026",
+      description: "",
+      path: "images/albums/apr-11-drift-toge/",
+      thumbnail: "thumb.jpeg",
+      hasSubfolders: true,
+      photos: [
+        "thumb.jpeg",
+        "IMG_ - 1 9.25.48 PM.jpeg",
+        "IMG_ - 2 9.25.48 PM.jpeg",
+        "IMG_ - 3 9.25.48 PM.jpeg",
+        "IMG_ - 4 9.25.48 PM.jpeg",
+        "IMG_ - 5 9.25.48 PM.jpeg",
+        "IMG_ - 6 9.25.48 PM.jpeg",
+        "IMG_ - 7 9.25.48 PM.jpeg",
+        "IMG_ - 8 9.25.48 PM.jpeg",
+        "IMG_ - 9 9.25.48 PM.jpeg",
+        "IMG_ - 10 9.25.48 PM.jpeg",
+        "IMG_ - 11 9.25.48 PM.jpeg",
+        "IMG_ - 12 9.25.48 PM.jpeg",
+        "IMG_ - 13 9.25.48 PM.jpeg",
+        "IMG_ - 14 9.25.48 PM.jpeg",
+        "IMG_ - 15 9.25.48 PM.jpeg",
+        "IMG_ - 16 9.25.48 PM.jpeg",
+        "IMG_ - 17 9.25.48 PM.jpeg",
+        "IMG_ - 18 9.25.48 PM.jpeg",
+        "IMG_ - 19 9.25.48 PM.jpeg",
+        "IMG_ - 20 9.25.48 PM.jpeg",
+        "IMG_ - 21 9.25.48 PM.jpeg",
+        "IMG_ - 22 9.25.48 PM.jpeg",
+        "IMG_ - 24 9.25.48 PM.jpeg",
+        "IMG_ - 25 9.25.48 PM.jpeg",
+        "IMG_ - 26 9.25.48 PM.jpeg",
+        "IMG_ - 27 9.25.48 PM.jpeg",
+        "IMG_ - 28 9.25.48 PM.jpeg",
+        "IMG_ - 29 9.25.48 PM.jpeg",
+
+      ]
+    },
     "apr-11-drift-toge": {
       title: "Drift TOGE",
-      date: "Apr. 11, 2025",
+      date: "Apr. 11, 2026",
       description: "",
       path: "images/albums/apr-11-drift-toge/",
       thumbnail: "thumb.jpeg",
@@ -62,7 +143,7 @@
   
     "apr-8-carspot": {
       title: "Carspot",
-      date: "Apr. 8, 2025",
+      date: "Apr. 8, 2026",
       description: "",
       path: "images/albums/apr-8-carspot/",
       thumbnail: "thumb.jpeg",
@@ -85,7 +166,7 @@
   
     "mar-1-mar-blacktop": {
       title: "Blacktop",
-      date: "Mar. 1, 2025",
+      date: "Mar. 1, 2026",
       description: "",
       path: "images/albums/mar-1-mar-blacktop/",
       thumbnail: "thumb.jpeg",
@@ -138,7 +219,7 @@
   
     "jan-11-supercars": {
       title: "Supercars of Oklahoma",
-      date: "Jan. 11, 2025",
+      date: "Jan. 11, 2026",
       description: "",
       path: "images/albums/jan-11-supercars/",
       thumbnail: "thumb.jpeg",
@@ -223,7 +304,7 @@
   
     "jan-4-jan-carshow": {
       title: "Carshow",
-      date: "Jan. 4, 2025",
+      date: "Jan. 4, 2026",
       description: "",
       path: "images/albums/jan-4-jan-carshow/",
       thumbnail: "thumb.jpeg",
@@ -270,7 +351,7 @@
   
     "dec-21-sunday-shoot": {
       title: "Sunday Shoot",
-      date: "Dec. 21, 2024",
+      date: "Dec. 21, 2025",
       description: "",
       path: "images/albums/dec-21-sunday-shoot/",
       thumbnail: "thumb.jpeg",
@@ -301,7 +382,7 @@
   
     "nov-2-nov-carshow": {
       title: "November Carshow",
-      date: "Nov. 2, 2024",
+      date: "Nov. 2, 2025",
       description: "",
       path: "images/albums/nov-2-nov-carshow/",
       thumbnail: "thumb.jpeg",
