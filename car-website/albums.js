@@ -62,7 +62,7 @@
       title: "May Blacktop",
       date: "May. 3, 2026",
       description: "",
-      path: "images/albums/apr-11-drift-toge/",
+      path: "images/albums/may-3-may-blacktop/",
       thumbnail: "thumb.jpeg",
       hasSubfolders: true,
       photos: [
