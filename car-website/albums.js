@@ -47,16 +47,54 @@
       hasSubfolders: true,
       photos: [
 
+
+*/
     "may-23-wings&-wheels": {
       title: "Wings & Wheels",
       date: "May. 23, 2026",
       description: "",
-      path: "images/albums/apr-11-drift-toge/",
+      path: "images/albums/may-23-wings&-wheels/",
       thumbnail: "thumb.jpeg",
       hasSubfolders: true,
       photos: [
+        "thumb.jpeg",
+        "IMG_ - 1 9.26.22PM.jpeg",
+        "IMG_ - 2 9.26.23PM.jpeg",
+        "IMG_ - 3 9.26.23PM.jpeg",
+        "IMG_ - 4 9.26.23PM.jpeg",
+        "IMG_ - 5 9.26.23PM.jpeg",
+        "IMG_ - 6 9.26.23PM.jpeg",
+        "IMG_ - 7 9.26.23PM.jpeg",
+        "IMG_ - 8 9.26.23PM.jpeg",
+        "IMG_ - 9 9.26.23PM.jpeg",
+        "IMG_ - 10 9.26.23PM.jpeg",
+        "IMG_ - 12 9.26.23PM.jpeg",
+        "IMG_ - 13 9.26.23PM.jpeg",
+        "IMG_ - 14 9.26.23PM.jpeg",
+        "IMG_ - 15 9.26.23PM.jpeg",
+        "IMG_ - 16 9.26.23PM.jpeg",
+        "IMG_ - 17 9.26.23PM.jpeg",
+        "IMG_ - 18 9.26.23PM.jpeg",
+        "IMG_ - 19 9.26.23PM.jpeg",
+        "IMG_ - 20 9.26.23PM.jpeg",
+        "IMG_ - 21 9.26.23PM.jpeg",
+        "IMG_ - 22 9.26.23PM.jpeg",
+        "IMG_ - 23 9.26.23PM.jpeg",
+        "IMG_ - 24 9.26.23PM.jpeg",
+        "IMG_ - 25 9.26.23PM.jpeg",
+        "IMG_ - 26 9.26.23PM.jpeg",
+        "IMG_ - 27 9.26.23PM.jpeg",
+        "IMG_ - 28 9.26.23PM.jpeg",
+        "IMG_ - 29 9.26.23PM.jpeg",
+        "IMG_ - 30 9.26.23PM.jpeg",
+        "IMG_ - 31 9.26.23PM.jpeg",
+        "IMG_ - 32 9.26.23PM.jpeg",
+        "IMG_ - 33 9.26.23PM.jpeg",
+        "IMG_ - 34 9.26.23PM.jpeg",
+        "IMG_ - 35 9.26.23PM.jpeg",
 
-*/
+      ]
+    },  
         
     "may-3-may-blacktop": {
       title: "May Blacktop",
@@ -98,6 +136,8 @@
 
       ]
     },
+
+
     "apr-11-drift-toge": {
       title: "Drift TOGE",
       date: "Apr. 11, 2026",
