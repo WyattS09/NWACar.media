@@ -19,36 +19,106 @@
 
 
 
-/*
+
     "july-5-july-blacktop": {
       title: "July Blacktop",
       date: "Jul. 5, 2026",
       description: "",
-      path: "images/albums/apr-11-drift-toge/",
-      thumbnail: "thumb.jpeg",
+      path: "images/albums/july-5-july-blacktop/",
+      thumbnail: "thumb.jpg",
       hasSubfolders: true,
       photos: [
+      "thumb.jpg",
+      "IMG_1459.jpg",
+      "IMG_1467.jpg",
+      "IMG_1468.jpg",
+      "IMG_1473.jpg",
+      "IMG_1475.jpg",
+      "IMG_1478.jpg",
+      "IMG_1479.jpg",
+      "IMG_1481.jpg",
+      "IMG_1483.jpg",
+      "IMG_1484.jpg",
+      "IMG_1487.jpg",
+      "IMG_1488.jpg",
+      "IMG_1489.jpg",
+      "IMG_1491.jpg",
+      "IMG_1496.jpg",
+      "IMG_1500.jpg",
+      "IMG_1501.jpg",
+      "IMG_1505.jpg",
+      "IMG_1508.jpg",
+      "IMG_1513.jpg",
+      "IMG_1516.jpg",
+      "IMG_1524.jpg",
+   ]
+   },
+
+
 
     "june-16-tuner-tuesday": {
       title: "Tuner Tuesday",
       date: "Jul. 16, 2026",
       description: "",
-      path: "images/albums/apr-11-drift-toge/",
-      thumbnail: "thumb.jpeg",
+      path: "images/albums/june-16-tuner-tuesday/",
+      thumbnail: "thumb.jpg",
       hasSubfolders: true,
       photos: [
+      "thumb.jpg",
+      "IMG_1379.jpg",
+      "IMG_1381.jpg",
+      "IMG_1383.jpg",
+      "IMG_1384.jpg",
+      "IMG_1386.jpg",
+      "IMG_1392.jpg",
+      "IMG_1396.jpg",
+      "IMG_1403.jpg",
+      "IMG_1406.jpg",
+      "IMG_1409.jpg",
+      "IMG_1425.jpg",
+      "IMG_1427.jpg",
+      "IMG_1428.jpg",
+      "IMG_1430.jpg",
+      "IMG_1432.jpg",
+      "IMG_1433.jpg",
+      "IMG_1434.jpg",
+      "IMG_1436.jpg",
+      "IMG_1438.jpg",
+   ]
+   },
+
 
     "june-5-car-museum": {
       title: "Newport Car Museum",
       date: "Jun. 5, 2026",
       description: "",
-      path: "images/albums/apr-11-drift-toge/",
+      path: "images/albums/june-5-car-museum/",
       thumbnail: "thumb.jpeg",
       hasSubfolders: true,
       photos: [
+      "thumb.jpeg",
+      "IMG_ - 1.jpeg",
+      "IMG_ - 2.jpeg",
+      "IMG_ - 3.jpeg",
+      "IMG_ - 4.jpeg",
+      "IMG_ - 5.jpeg",
+      "IMG_ - 6.jpeg",
+      "IMG_ - 7.jpeg",
+      "IMG_ - 8.jpeg",
+      "IMG_ - 9.jpeg",
+      "IMG_ - 10.jpeg",
+      "IMG_ - 11.jpeg",
+      "IMG_ - 12.jpeg",
+      "IMG_ - 14.jpeg",
+      "IMG_ - 15.jpeg",
+      "IMG_ - 16.jpeg",
+      "IMG_ - 17.jpeg",
+      "IMG_ - 18.jpeg",
+      "IMG_ - 19.jpeg",
+      ]
+    },
 
-
-*/
+    /*
     "may-23-wings&-wheels": {
       title: "Wings & Wheels",
       date: "May. 23, 2026",
@@ -105,7 +175,7 @@
       hasSubfolders: true,
       photos: [
         "thumb.jpeg",
-        "IMG_ - 1 9.25.48 PM.jpeg",
+        "IMG_ - 1 9.25.48 PM.jpeg", "IMG_ - 1 9.25.48 PM.jpeg",
         "IMG_ - 2 9.25.48 PM.jpeg",
         "IMG_ - 3 9.25.48 PM.jpeg",
         "IMG_ - 4 9.25.48 PM.jpeg",
@@ -137,7 +207,7 @@
       ]
     },
 
-
+*/
     "apr-11-drift-toge": {
       title: "Drift TOGE",
       date: "Apr. 11, 2026",
