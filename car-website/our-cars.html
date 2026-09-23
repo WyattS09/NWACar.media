@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The cars behind NWACar.Media.">
+  <title>Our Cars — NWACar.Media</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">NWACar.Media</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="our-cars.html" class="active">Our Cars</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="cars-header">
+    <div class="albums-eyebrow">The builds</div>
+    <h1>Our Cars</h1>
+    <p>
+      The cars we own, drive, photograph, and continue to build.
+    </p>
+  </header>
+
+  <main class="cars-section">
+    <div class="car-grid" id="car-grid"></div>
+  </main>
+
+  <footer>
+    <span>© 2025 NWACar.Media</span>
+    <a href="https://www.instagram.com/project.nwacar.media" target="_blank" rel="noopener">
+      @project.nwacar.media
+    </a>
+  </footer>
+
+  <script src="cars.js"></script>
+  <script>
+    const grid = document.getElementById("car-grid");
+
+    Object.keys(cars).forEach((key) => {
+      const car = cars[key];
+
+      const link = document.createElement("a");
+      link.href = "car.html?car=" + encodeURIComponent(key);
+      link.className = "car-card";
+
+      const image = document.createElement("img");
+      image.className = "car-card-img";
+      image.src = car.path + car.thumbnail;
+      image.alt = car.title;
+      image.loading = "lazy";
+
+      const overlay = document.createElement("div");
+      overlay.className = "album-card-overlay";
+
+      const info = document.createElement("div");
+      info.className = "album-card-info";
+
+      const year = document.createElement("div");
+      year.className = "album-card-date";
+      year.textContent = car.year || "";
+
+      const title = document.createElement("div");
+      title.className = "album-card-title";
+      title.textContent = car.title;
+
+      const arrow = document.createElement("span");
+      arrow.className = "album-card-arrow";
+      arrow.textContent = "→";
+
+      info.append(year, title);
+      link.append(image, overlay, info, arrow);
+      grid.appendChild(link);
+    });
+  </script>
+
+</body>
+</html>

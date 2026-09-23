@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car — NWACar.Media</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">NWACar.Media</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="our-cars.html" class="active">Our Cars</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="car-detail-header">
+    <a class="back-link" href="our-cars.html">← All Cars</a>
+    <div class="album-header-meta" id="car-year"></div>
+    <h1 id="car-title"></h1>
+
+    <div class="build-details">
+      <section class="build-detail">
+        <h2>Completed</h2>
+        <p id="car-completed"></p>
+      </section>
+
+      <section class="build-detail">
+        <h2>Next Up</h2>
+        <p id="car-planned"></p>
+      </section>
+    </div>
+  </header>
+
+  <div class="photo-grid-wrap">
+    <div class="photo-grid" id="photo-grid"></div>
+  </div>
+
+  <div id="lightbox" class="lightbox hidden">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <span id="lightbox-prev" class="lightbox-arrow">&#10094;</span>
+    <img id="lightbox-img" src="" alt="">
+    <span id="lightbox-next" class="lightbox-arrow">&#10095;</span>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+
+  <footer>
+    <span>© 2025 NWACar.Media</span>
+    <a href="https://www.instagram.com/project.nwacar.media" target="_blank" rel="noopener">
+      @project.nwacar.media
+    </a>
+  </footer>
+
+  <script src="cars.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const car = cars[params.get("car")];
+
+    const grid = document.getElementById("photo-grid");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const counter = document.getElementById("lightbox-counter");
+    let currentIndex = 0;
+
+    if (!car) {
+      document.getElementById("car-title").textContent = "Car not found";
+    } else {
+      document.title = car.title + " — NWACar.Media";
+      document.getElementById("car-year").textContent = car.year || "";
+      document.getElementById("car-title").textContent = car.title;
+      document.getElementById("car-completed").textContent = car.completed || "Coming soon.";
+      document.getElementById("car-planned").textContent = car.planned || "Coming soon.";
+
+      car.photos.forEach((photo, index) => {
+        const image = document.createElement("img");
+        image.src = car.path + photo;
+        image.alt = car.title;
+        image.loading = "lazy";
+        image.addEventListener("click", () => openLightbox(index));
+        grid.appendChild(image);
+      });
+    }
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.remove("hidden");
+      document.body.classList.add("no-scroll");
+    }
+
+    function updateLightbox() {
+      lightboxImg.src = car.path + car.photos[currentIndex];
+      lightboxImg.alt = car.title;
+      counter.textContent = (currentIndex + 1) + " / " + car.photos.length;
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add("hidden");
+      lightboxImg.src = "";
+      document.body.classList.remove("no-scroll");
+    }
+
+    function showImage(index) {
+      currentIndex = (index + car.photos.length) % car.photos.length;
+      updateLightbox();
+    }
+
+    document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+    document.getElementById("lightbox-prev").addEventListener("click", () => showImage(currentIndex - 1));
+    document.getElementById("lightbox-next").addEventListener("click", () => showImage(currentIndex + 1));
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (lightbox.classList.contains("hidden")) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") showImage(currentIndex - 1);
+      if (event.key === "ArrowRight") showImage(currentIndex + 1);
+    });
+  </script>
+
+</body>
+</html>
